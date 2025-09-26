@@ -1,0 +1,149 @@
+/* Example HTML structure:
+<div class="suitcase">
+    <div class="handle"></div>
+    <div class="latch left"></div>
+    <div class="latch right"></div>
+    <div class="wheel left"></div>
+    <div class="wheel right"></div>
+</div>
+*/
+
+/* Size root */
+:root { --size: 240px; --body:#2563eb; --body-dark:#1e40af; --trim:#eef2f7; --metal:#374151; --accent:#f59e0b; --shadow: rgba(0,0,0,0.28); }
+
+body {
+    background-color: blue;
+}
+
+.suitcase {
+    --w: var(--size);
+    width: var(--w);
+    height: calc(var(--w) * 0.65);
+    position: relative;
+    margin: 40px auto;
+    border-radius: 14px;
+    background: linear-gradient(180deg, var(--body) 0%, var(--body-dark) 100%);
+    box-shadow:
+        0 18px 30px var(--shadow),
+        inset 0 -8px 18px rgba(255,255,255,0.05);
+    overflow: visible;
+    border: 6px solid var(--trim);
+    transform: translateZ(0);
+}
+
+/* subtle fabric texture */
+.suitcase::before{
+    content: "";
+    position: absolute;
+    inset: 12px;
+    border-radius: 10px;
+    background:
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0 6px, transparent 6px 12px),
+        linear-gradient(180deg, rgba(0,0,0,0.03), rgba(255,255,255,0.02));
+    pointer-events: none;
+}
+
+/* handle */
+.suitcase .handle {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: calc(-0.12 * var(--w));
+    width: calc(0.28 * var(--w));
+    height: calc(0.12 * var(--w));
+    background: linear-gradient(180deg, #111827, #0f172a);
+    border-radius: 12px;
+    box-shadow: 0 6px 10px rgba(0,0,0,0.4);
+    border: 6px solid var(--trim);
+    z-index: 6;
+}
+
+/* handle connectors */
+.suitcase .handle::before,
+.suitcase .handle::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 8px;
+    height: 18px;
+    background: var(--metal);
+    border-radius: 3px;
+    transform: translateY(-50%);
+    left: -12px;
+    box-shadow: inset 0 -2px rgba(0,0,0,0.3);
+}
+.suitcase .handle::after { left: auto; right: -12px; }
+
+/* decorative trim / ribs */
+.suitcase .rib {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    height: 8px;
+    background: rgba(0,0,0,0.06);
+    border-radius: 6px;
+    top: 32%;
+    transform: translateY(-50%);
+    box-shadow: 0 2px 0 rgba(255,255,255,0.03) inset;
+}
+
+/* latches */
+.suitcase .latch {
+    position: absolute;
+    bottom: 12px;
+    width: 18px;
+    height: 14px;
+    background: linear-gradient(180deg, #fbbf24, #c47b08);
+    border-radius: 3px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.25), inset 0 -2px rgba(0,0,0,0.12);
+    z-index: 5;
+}
+
+/* left / right positions */
+.suitcase .latch.left { left: 20px; }
+.suitcase .latch.right { right: 20px; }
+
+/* small metallic hinge detail */
+.suitcase .latch::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: -6px;
+    width: 8px;
+    height: 6px;
+    background: var(--metal);
+    border-radius: 2px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.25);
+}
+
+/* wheels */
+.suitcase .wheel {
+    position: absolute;
+    bottom: -10px;
+    width: 22px;
+    height: 22px;
+    background: radial-gradient(circle at 35% 35%, #fff 0 6%, #9ca3af 6% 12%, #111827 12% 60%);
+    border-radius: 50%;
+    box-shadow: 0 8px 14px rgba(0,0,0,0.25);
+    z-index: 3;
+}
+
+/* wheel positions */
+.suitcase .wheel.left { left: 24px; }
+.suitcase .wheel.right { right: 24px; }
+
+/* optional interior strap (use an extra element inside) */
+.suitcase .strap {
+    position: absolute;
+    inset: 18px;
+    border-radius: 8px;
+    background: linear-gradient(90deg, rgba(0,0,0,0.06), transparent 40%, rgba(0,0,0,0.06));
+    mix-blend-mode: multiply;
+    pointer-events: none;
+}
+
+/* small responsive tweak */
+@media (max-width: 360px) {
+    :root { --size: 180px; }
+}
